@@ -1,0 +1,79 @@
+# docker-compose.yml
+version: '3'
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - microservice_network
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - microservice_network
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+      - user-service
+      - product-service
+      - order-service
+    networks:
+      - microservice_network
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "4001:4001"
+    environment:
+      - PORT=4001
+      - MONGO_URI=mongodb://mongodb:27017/user-service
+      - JWT_SECRET=your_jwt_secret
+    depends_on:
+      - mongodb
+    networks:
+      - microservice_network
+
+  product-service:
+    build: ./product-service
+    ports:
+      - "4002:4002"
+    environment:
+      - PORT=4002
+      - MONGO_URI=mongodb://mongodb:27017/product-service
+    depends_on:
+      - mongodb
+    networks:
+      - microservice_network
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "4003:4003"
+    environment:
+      - PORT=4003
+      - MONGO_URI=mongodb://mongodb:27017/order-service
+    depends_on:
+      - mongodb
+      - product-service
+    networks:
+      - microservice_network
+
+networks:
+  microservice_network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
