@@ -38,3 +38,5 @@ The system consists of the following components:
 
 ### Running the Application
 1. Clone the repository
+git clone [https://github.com/yo/ecommerce-microservices.git](https://github.com/Asif12as/E-Commerce_Microservices.git)
+cd ecommerce-microservices
