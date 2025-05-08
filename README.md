@@ -29,4 +29,12 @@ The system consists of the following components:
 - Swagger for API documentation
 - JWT for authentication
 
-## Project Structure
+
+## Installation & Setup
+
+### Prerequisites
+- Docker and Docker Compose
+- Node.js (for local development)
+
+### Running the Application
+1. Clone the repository
