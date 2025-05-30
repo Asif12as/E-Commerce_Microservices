@@ -12,6 +12,7 @@ The system consists of the following components:
 - **MongoDB**: Database for each service
 - **Redis**: For caching and rate limiting
 
+
 ## Features
 - 🔒 User authentication with JWT
 - 🔄 API Gateway with rate limiting
